@@ -13,7 +13,7 @@ const App = () => {
 
     const fetchTasks = async () => {
         try {
-            const response = await axios.get('https://fullstack-heol.onrender.com/tasks');
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URI}/tasks`);
             setTasks(response.data);
         } catch (err) {
             console.error('Error fetching tasks:', err);
@@ -22,7 +22,7 @@ const App = () => {
 
     const addTask = async () => {
         try {
-            const response = await axios.post('https://fullstack-heol.onrender.com/tasks', { todo: newTask });
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URI}/tasks`, { todo: newTask });
             setTasks([...tasks, response.data]);
             setNewTask('');
         } catch (err) {
@@ -32,7 +32,7 @@ const App = () => {
 
     const updateTask = async (id, updatedTask) => {
         try {
-            const response = await axios.put(`https://fullstack-heol.onrender.com/tasks/${id}`, updatedTask);
+            const response = await axios.put(`${process.env.REACT_APP_BACKEND_URI}/tasks/${id}`, updatedTask);
             setTasks(tasks.map(task => (task._id === id ? response.data : task)));
         } catch (err) {
             console.error('Error updating task:', err);
@@ -41,7 +41,7 @@ const App = () => {
 
     const deleteTask = async (id) => {
         try {
-            await axios.delete(`https://fullstack-heol.onrender.com/tasks/${id}`);
+            await axios.delete(`${process.env.REACT_APP_BACKEND_URI}/tasks/${id}`);
             setTasks(tasks.filter(task => task._id !== id));
         } catch (err) {
             console.error('Error deleting task:', err);
